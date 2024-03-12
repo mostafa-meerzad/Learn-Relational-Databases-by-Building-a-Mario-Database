@@ -47,4 +47,57 @@
 27. Now that you aren't connected to second_database, you can drop it. Use the `DROP DATABASE` keywords to do that.
 28. Okay, I think you're ready to get started. I don't think you created any tables here, take a look to make sure.
 29. Create a new table named characters, it will hold some basic information about Mario characters
-30. 
+30. Next, you can add some columns to the table. Add a column named **character_id** to your new table that is a type of **SERIAL**.
+31. The **SERIAL** type will make your column an **INT** with a **NOT NULL** constraint, and automatically increment the integer when a new row is added. View the details of the characters table to see what SERIAL did for you.
+32. Add a column to characters called name. Give it a data type of **VARCHAR(30)**, and a constraint of **NOT NULL**. Add a constraint by putting it right after the data type.
+33. You can make another column for where they are from. Add another column named **homeland**. Give it a data type of **VARCHAR** that has a max length of **60**.
+34. You are ready to start adding some rows. First is Mario. Earlier, you used this command to add a row:
+    `INSERT INTO second_table(id, username) VALUES(1, 'Samus');`
+    The first parenthesis is for the column names, you can put as many columns as you want. The second parenthesis is for the values for those columns. Add a row to your table, give it a name of **Mario**, a homeland of **Mushroom Kingdom**, and a favorite_color of **Red**. Make sure to use single quotes where needed.
+35. Use `SELECT * FROM characters;` to view that the character_id has changed now.
+36. Add another row for Luigi. Give it a name of **Luigi**, a homeland of **Mushroom Kingdom**, and a favorite_color of **Green**.
+37. View all the data in your characters table with SELECT again.
+38. Adding rows one at a time is quite tedious. Here's an example of how you could have added the previous three rows at once:
+    `INSERT INTO characters(name, homeland, favorite_color)
+VALUES('Mario', 'Mushroom Kingdom', 'Red'),
+('Luigi', 'Mushroom Kingdom', 'Green'),
+('Peach', 'Mushroom Kingdom', 'Pink');`
+    Add two more rows. Give the first one the values: Toadstool, Mushroom Kingdom, and Red. Give the second one: Bowser, Mushroom Kingdom, and Green. Try to add them with one command.
+39. If you don't get a message after a command, it is likely incomplete. This is because you can put a command on multiple lines. Add two more rows. Give the first one the values: Daisy, Sarasaland, and Yellow. The second: Yoshi, Dinosaur Land, and Green. Try to do it with one command.
+40. It looks good, but there's a few mistakes. You can change a value like this:
+    `UPDATE table_name SET column_name=new_value WHERE condition;`
+    You used username='Samus' as a condition earlier. SET Daisy's favorite_color to Orange. You can use the condition name='Daisy' to change her row.
+41. The command you just used does exactly what it sounds like. It finds the row where name is Daisy, and sets her favorite_color to Orange. Take a look at all the data in your table again to see if she got updated.
+42. Her favorite color was updated. Toadstool's name is wrong as well, it's actually Toad. Use UPDATE to SET his name to Toad. Use the condition favorite_color='Red'.
+43. Using favorite_color='Red' was not a good idea. Mario's name changed to Toad because he likes red, and now there's two rows that are the same. Well, almost. Only the character_id is different. You will have to use that to change it back to Mario. Use UPDATE to set the name to Mario for the row with the lowest character_id.
+44. Actually, you should put that in order. Here's an example:
+    SELECT` columns FROM table_name ORDER BY column_name;`
+    View all the data again, but put it in order by character_id.
+    1. Try entering SELECT \* FROM characters ORDER BY character_id;
+45. It looks good. Next, you are going to add a **primary key**. It's a column that uniquely identifies each row in the table. Here's an example of how to set a PRIMARY KEY:
+    `ALTER TABLE table_name ADD PRIMARY KEY(column_name);`
+    The name column is pretty unique, why don't you set that as the primary key for this table.
+46. You should set a primary key on every table and there can only be one per table. Take a look at the details of your characters table to see the primary key at the bottom.
+47. You can see the key for your name column at the bottom. It would have been better to use character_id for the primary key. Here's an example of how to drop a constraint:
+    `ALTER TABLE table_name DROP CONSTRAINT constraint_name;`
+    Drop the primary key on the name column. You can see the constraint name is characters_pkey.
+48. View the details of the characters table to make sure it's gone.
+49. That's better. The table looks complete for now. Next, create a new table named more_info for some extra info about the characters.
+50. I wonder what that third one is. It says characters_character_id_seq. I think I have a clue. View the details of the characters table
+51. That is what finds the next value for the character_id column. Add a column to your new table named more_info_id. Make it a type of SERIAL.
+52. Set your new column as the primary key for this table.
+53. There it is. Add another column to more_info named birthday. Give it a data type of DATE
+54. Add a weight column. Give it a type of **NUMERIC(4, 1)**. That data type is for decimals. **NUMERIC(4, 1)** has up to four digits and one of them has to be to the right of the decimal.
+55. There’s your four columns and the primary key you created at the bottom. To know what row is for a character, you need to set a foreign key so you can relate rows from this table to rows from your characters table. Here's an example that creates a column as a foreign key:
+    `ALTER TABLE table_name ADD COLUMN column_name DATATYPE REFERENCES referenced_table_name(referenced_column_name);`
+    That's quite the command. In the more_info table, create a character_id column. Make it an INT and a foreign key that references the character_id column from the characters table. Good luck.
+56. To set a row in more_info for Mario, you just need to set the character_id (foreign key) value to whatever it is in the characters table. Take a look at the details of more_info to see your foreign key.
+57. There's your foreign key at the bottom. These tables have a **"one-to-one"** relationship. One row in the **characters** table will be related to exactly one row in **more_info** and vice versa. Enforce that by adding the **UNIQUE** constraint to your foreign key. Here's an example:
+    `ALTER TABLE table_name ADD UNIQUE(column_name);`
+    Add the UNIQUE constraint to the column you just added.
+58. The column should also be **NOT NULL** since you don't want to have a row that is for nobody. Here's an example:
+    `ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;`
+    Add the NOT NULL constraint to your foreign key column.
+59. The structure is set, now you can add some rows. First, you need to know what **character_id** you need for the **foreign key column**.
+60. You have viewed all columns in a table with \*. You can pick columns by putting in the column name instead of \*. Use SELECT to view the character_id column from the characters table.
+61.
