@@ -1,20 +1,20 @@
 # Learn Relational Databases by Building a Mario Database
 
-1. Your virtual machine comes with PostgreSQL installed. You will use the Psql terminal application to interact with it. Log in by typing `psql --username=freecodecamp --dbname=postgres` into the terminal and pressing enter.
-2. Notice that the prompt changed to let you know that you are now interacting with PostgreSQL. First thing to do is see what databases are here. Type \l into the prompt to list them.
-3. The databases you see are there by default. You can make your own like this:
-   `CREATE DATABASE database_name;`
-   The capitalized words are keywords telling PostgreSQL what to do. The name of the database is the lowercase word. **Note that all commands need a semi-colon at the end**. Create a new database named **first_database**.
-4. It worked. Your new database is there. If you don't get a message after entering a command, it means it's incomplete and you likely forgot the **semi-colon**. You can just add it on the next line and press enter to finish the command. Create another database named **second_database**
-5. You can connect to a database by entering `\c database_name`. You need to connect to add information. Connect to your second_database.
-6. You should see a message that you are connected. Notice that the prompt changed to **second_database=>**. So the **postgres=>** prompt before must have meant you were connected to that database. A database is made of tables that hold your data. Enter `\d` to **display** the tables.
-7. Looks like there's no tables or relations yet. Similar to how you created a database, you can create a table like this:
-   `CREATE TABLE table_name();`
-   Note that the **parenthesis** are needed for this one. It will create the **table** in the database you are connected to. Create a table named first_table in second_database.
-8. You can view more details about a table by adding the table name after the display command like this:` \d table_name`. View more details about your second_table.
-9. Tables need **columns** to describe the data in them, yours doesn't have any yet. Here's an example of how to add one:
-   `ALTER TABLE table_name ADD COLUMN column_name DATATYPE;`
-   Add a column to second_table named first_column. Give it a data type of **INT**. **INT** stands for integer. Don't forget the semi-colon.
+1.  Your virtual machine comes with PostgreSQL installed. You will use the Psql terminal application to interact with it. Log in by typing `psql --username=freecodecamp --dbname=postgres` into the terminal and pressing enter.
+2.  Notice that the prompt changed to let you know that you are now interacting with PostgreSQL. First thing to do is see what databases are here. Type \l into the prompt to list them.
+3.  The databases you see are there by default. You can make your own like this:
+    `CREATE DATABASE database_name;`
+    The capitalized words are keywords telling PostgreSQL what to do. The name of the database is the lowercase word. **Note that all commands need a semi-colon at the end**. Create a new database named **first_database**.
+4.  It worked. Your new database is there. If you don't get a message after entering a command, it means it's incomplete and you likely forgot the **semi-colon**. You can just add it on the next line and press enter to finish the command. Create another database named **second_database**
+5.  You can connect to a database by entering `\c database_name`. You need to connect to add information. Connect to your second_database.
+6.  You should see a message that you are connected. Notice that the prompt changed to **second_database=>**. So the **postgres=>** prompt before must have meant you were connected to that database. A database is made of tables that hold your data. Enter `\d` to **display** the tables.
+7.  Looks like there's no tables or relations yet. Similar to how you created a database, you can create a table like this:
+    `CREATE TABLE table_name();`
+    Note that the **parenthesis** are needed for this one. It will create the **table** in the database you are connected to. Create a table named first_table in second_database.
+8.  You can view more details about a table by adding the table name after the display command like this:` \d table_name`. View more details about your second_table.
+9.  Tables need **columns** to describe the data in them, yours doesn't have any yet. Here's an example of how to add one:
+    `ALTER TABLE table_name ADD COLUMN column_name DATATYPE;`
+    Add a column to second_table named first_column. Give it a data type of **INT**. **INT** stands for integer. Don't forget the semi-colon.
 10. Your column is there 😄 Use `ALTER TABLE` and `ADD COLUMN` to add another column to **second_table** named id that's a type of **INT**.
 11. Your table should have an id column added. View the details of second_table to make sure.
 12. Those are some good looking columns. You will probably need to know how to remove them. Here's an example:
@@ -100,4 +100,160 @@ VALUES('Mario', 'Mushroom Kingdom', 'Red'),
     Add the NOT NULL constraint to your foreign key column.
 59. The structure is set, now you can add some rows. First, you need to know what **character_id** you need for the **foreign key column**.
 60. You have viewed all columns in a table with \*. You can pick columns by putting in the column name instead of \*. Use SELECT to view the character_id column from the characters table.
-61.
+61. That list of numbers doesn't really help. Use **SELECT** again to display both the **character_id** and **name** columns from the _characters_ table. You can separate the column names with a comma to view both.
+62. That's better. You can see Mario's id there. Here's some more info for him:
+
+    |  birthday  | height | weight |
+    | :--------: | :----: | :----: |
+    | 1981-07-09 |  155   |  64.5  |
+
+    Add a row to **more_info** with the above data for **Mario** using the `INSERT INTO` and `VALUES` keywords. Be sure to set his **character_id** when adding him. Also, **DATE** values need a string with the format: **'YYYY-MM-DD'**.
+    `INSERT INTO more_info(birthday, height, weight, character_id) VALUES('1981-07-09', 155, 64.5, 1);`
+
+63. Next, you are going to add some info for **Luigi**. Use `SELECT` again to view the **character_id** and **name** columns from the characters table to find his id.
+64. You can see Luigi's id there. Here's his info:
+
+    |  birthday  | height | weight |
+    | :--------: | :----: | :----: |
+    | 1983-07-14 |  175   |  48.8  |
+
+    Add a row in **more_info** for **Luigi** using the above info. Be sure to add his **character_id** as well.
+
+65. Here's the additional info for Peach:
+
+    |  birthday  | height | weight |
+    | :--------: | :----: | :----: |
+    | 1985-10-18 |  173   |  52.2  |
+
+    Add a row for **Peach** using the above info. Be sure to add her **character_id** as well.
+
+    `mario_database=> INSERT INTO more_info(birthday, height, weight, character_id) VALUES('1985-10-18', 173, 52.2, 3);`
+
+66. Toad is next. Instead of viewing all the rows to find his id, you can just view his row with a **WHERE** condition. You used several earlier to delete and update rows. You can use it to view rows as well. Here's an example:
+
+    `SELECT columns FROM table_name WHERE condition;`
+
+    A condition you used before was **username='Samus'**. Find Toad's id by viewing the **character_id** and **name** columns from characters for only his row.
+
+67. Here's what Toad's info looks like:
+
+|  birthday  | height | weight |
+| :--------: | :----: | :----: |
+| 1950-01-10 |   66   |  35.6  |
+
+Add the above info for Toad. Be sure to add his **character_id**
+
+68. View all the data in more_info to see the rows you added.
+69. Bowser is next. Find his id by viewing the character_id and name columns for only his row.
+70. Here's what Bowser's info looks like:
+
+    |  birthday  | height | weight |
+    | :--------: | :----: | :----: |
+    | 1990-10-29 |  258   |  300   |
+
+    Add the above info for Bowser. Don't forget to add his character_id.
+
+71. Daisy is next. Find her id by viewing the character_id and name columns for only her row.
+72. The info for Daisy looks like this:
+
+|  birthday  | height | weight |
+| :--------: | :----: | :----: |
+| 1989-07-31 |  NULL  |  NULL  |
+
+Add the above info for Daisy to more_info. Be sure to add her character_id as well. You can use NULL or simply not include the null columns when inserting.
+
+73. Null values show up as blank. Yoshi is last. Find his id by viewing the character_id and name columns for only his row.
+
+74. The info for Yoshi looks like this:
+
+|  birthday  | height | weight |
+| :--------: | :----: | :----: |
+| 1990-04-13 |  162   |  59.1  |
+
+Add the above info for Yoshi to more_info. Be sure to include his character_id.
+
+75. There should be a lot of data in more_info now. Take a look at all the rows and columns in it.
+76. It looks good. There is something you can do to help out though. What units do the height and weight columns use? It's centimeters and kilograms, but nobody will know. Rename the height column to height_in_cm.
+77. Rename the weight column to weight_in_kg.
+78. Next, you will make a sounds table that holds filenames of sounds the characters make. You created your other tables similar to this:
+
+    `CREATE TABLE table_name();`
+
+    Inside those parenthesis you can put columns for a table so you don't need to add them with a separate command, like this:
+
+    `CREATE TABLE table_name(column_name DATATYPE CONSTRAINTS);`
+
+    Create a new table named sounds. Give it a column named **sound_id** of type **SERIAL** and a constraint of **PRIMARY KEY**.
+
+79. View the tables in mario_database to make sure it worked.
+80. There's your sounds table. Add a column to it named **filename**. Make it a **VARCHAR** that has a max length of **40** and with constraints of **NOT NULL** and **UNIQUE**. You can put those constraints at the end of the query to add them all.
+81. You want to use **character_id** as a **foreign key** again. This will be a "one-to-many" relationship because one character will have many sounds, but no sound will have more than one character. Here's the example again:
+
+`ALTER TABLE table_name ADD COLUMN column_name DATATYPE CONSTRAINT REFERENCES referenced_table_name(referenced_column_name);`
+
+Add a column to sounds named **character_id**. Give it the properties **INT**, **NOT NULL**, and set it as a foreign key that references **character_id** from characters.
+
+82. Take a look at the details of the sounds table to see all the columns.
+83. Next, you will add some rows. But first, view all the data in characters so you can find the correct id's again. Order them by character_id like you did earlier.
+84. The first file is named **its-a-me.wav**. Insert it into the **sounds** table with **Mario's** id as the **character_id**.
+85. Add another row with a filename of **yippee.wav**. Use **Mario's** character_id again for the foreign key value.
+86. Add another row to sounds for Luigi named ha-ha.wav. Use his character_id this time. Take a look at the data in characters to find his id if you need to.
+87. Add another row with a filename of oh-yeah.wav. This one is for Luigi as well so use his character_id again.
+88. Add two more rows for Peach sounds. The filenames are yay.wav and woo-hoo.wav. Don't forget her character_id. Try to do it with one command.
+89. Add two more rows. The filenames are mm-hmm.wav and yahoo.wav. The first one is for Peach again, the second is for Mario, so use the correct foreign key values. Try to do it with one command
+90. See the "one-to-many" relationship? Create another new table called actions. Give it a column named action_id that's a type of SERIAL, and make it the PRIMARY KEY. Try to create the table and add the column with one com.
+91. Add a column named action to your new table. Give it a type of VARCHAR that is a max length of 20 and has UNIQUE and NOT NULL constraints.
+92. The actions table won't have any foreign keys. It's going to have a "many-to-many" relationship with the characters table. This is because many of the characters can perform many actions. You will see why you don't need a foreign key later. Insert a row into the actions table. Give it an action of run.
+93. insert another action jump.
+94. insert another action duck.
+95. View all the data in actions to make sure there's no mistakes.
+96. It looks good. **"Many-to-many"** relationships usually use a **junction** table to link two tables together, forming two **"one-to-many" relationships**. Your characters and actions table will be linked using a junction table. Create a new table called **character_actions**. It will describe what actions each character can perform.
+97. Your junction table will use the primary keys from the **characters** and **actions** tables as foreign keys to create the relationship. Add a column named **character_id** to your junction table. Give it the type of **INT** and constraint of **NOT NULL**
+98. The foreign keys you set before were added when you created the column. You can set an existing column as a foreign key like this:
+
+`ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES referenced_table(referenced_column);`
+
+Set the **character_id** column you just added as a foreign key that references the character_id from the characters table.
+
+99. Add another column to character_actions named action_id. Give it a type of INT and constraint of NOT NULL.
+100. This will be a foreign key as well. Set the action_id column you just added as a foreign key that references the action_id column from the actions table.
+101. Every table should have a primary key. Your previous tables had a single column as a primary key. This one will be different. You can create a **primary** key from two columns, known as a **composite primary key**. Here's an example:
+
+`ALTER TABLE table_name ADD PRIMARY KEY(column1, column2);`
+
+Use character_id and action_id to create a composite primary key for this table.
+
+102. This table will have multiple rows with the same **character_id**, and multiple rows the same **action_id**. So neither of them are unique. But you will never have the same **character_id** and **action_id** in a single row. So the two columns together can be used to uniquely identify each row. View the details of the **character_actions** table to see your composite key.
+103. Insert three rows into **character_actions** for all the actions **Yoshi** can perform. He can perform all of them in the actions table. View the data in the characters and actions table to find the correct id's for the information
+104. view all the details of **character_actions** table
+105. Add three more rows into character_actions for all of Daisy's actions. She can perform all of the actions, as well.
+106. Bowser can perform all the actions. Add three rows to the table for him.
+107. Next is Toad. Add three more rows for his actions.
+108. You guessed it. Peach can perform all the actions as well, so add three more rows for her.
+109. Add three more rows for Luigi's actions.
+110. Last is Mario, add three rows for his actions.
+111. That was a lot of work. View all the data in character_actions to see the rows you ended up with.
+112. Well done. The database is complete for now. Take a look around to see what you ended up with. First, display all the tables you created
+113. There's five tables there. Nice job. Next, take a look at all the data in the characters table.
+114. Those are some lovely characters. View all the data in the more_info table.
+115. You can see the **character_id** there so you just need to find the matching id in the **characters** table to find out who it's for. Or... You added that as a foreign key, that means you can get all the data from both tables with a JOIN command:
+
+`SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;`
+
+Enter a join command to see **all** the info from both tables. The two tables are **characters** and **more_info**. The columns are the **character_id** column from both tables since those are the linked keys.
+
+116. Now you can see all the info from both tables. If you recall, that's a "one-to-one" relationship. So there's one row in each table that matches a row from the other. Use another JOIN command to view the characters and sounds tables together. They both use the character_id column for their keys as well.
+     `mario_database=> SELECT * FROM characters FULL JOIN sounds ON characters.character_id = sounds.character_id;`
+
+117. This shows the "one-to-many" relationship. You can see that some of the characters have more than one row because they have many sounds. How can you see all the info from the characters, actions, and character_actions tables? Here's an example that joins three tables:
+
+```
+SELECT columns FROM junction_table
+FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
+FULL JOIN table_2 ON junction_table.foreign_key_column = table_2.primary_key_column;
+```
+
+Congratulations on making it this far. This is the last step. View all the data from characters, actions, and character_actions by joining all three tables. When you see the data, be sure to check the "many-to_many" relationship. Many characters will have many actions.
+
+118. mario_database=> SELECT \* FROM characters FULL JOIN actions ON characters.character_id = actions.action_id FULL JOIN character_actions ON charac
+     ters.character_id = chracter_actions.characcter_i
